@@ -6,23 +6,28 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import time
 
+import getFilmInLists
+
 browser = webdriver.Firefox()
 browser.get('https://letterboxd.com/sign-in/')
 # addFilm = browser.find_element(By.ID, 'frm-list-film-name')
 
-wait = WebDriverWait(browser, 10)
+wait = WebDriverWait(browser, 60)
 element = wait.until(EC.url_to_be('https://letterboxd.com/'))
 time.sleep(1)
 # browser.find_element(By.ID, 'field-username').send_keys('$$$$$$$$$$$$')
 # browser.find_element(By.ID, 'field-password').send_keys('$$$$$$$$$$$$')
 # browser.find_element(By.XPATH, '//form').submit()
-
+filmDict = getFilmInLists.fillListDict()
 browser.get('https://letterboxd.com/cururu_dog/list/melhores-finais-que-ja-vi/edit/')
 time.sleep(1)
 addFilm = browser.find_element(By.ID, 'frm-list-film-name')
-addFilm.send_keys('the-wolf-of-wall-street')
-time.sleep(1)
-addFilm.send_keys(Keys.RETURN)
+for key, value in filmDict.items():
+    for film in value['films']:
+        addFilm.send_keys(film['href'])
+        time.sleep(2)
+        addFilm.send_keys(Keys.RETURN)
+        time.sleep(0.5)
 
 time.sleep(5)
 
