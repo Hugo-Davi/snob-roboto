@@ -7,27 +7,38 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 import getFilmInLists
+import calculateFilms
 
 browser = webdriver.Firefox()
 browser.get('https://letterboxd.com/sign-in/')
-# addFilm = browser.find_element(By.ID, 'frm-list-film-name')
 
 wait = WebDriverWait(browser, 60)
-element = wait.until(EC.url_to_be('https://letterboxd.com/'))
+wait.until(EC.url_to_be('https://letterboxd.com/'))
 time.sleep(1)
-# browser.find_element(By.ID, 'field-username').send_keys('$$$$$$$$$$$$')
-# browser.find_element(By.ID, 'field-password').send_keys('$$$$$$$$$$$$')
-# browser.find_element(By.XPATH, '//form').submit()
-filmDict = getFilmInLists.fillListDict()
+
+filmDict = getFilmInLists.getFilmsInLists()
+filmsF = calculateFilms.calculateQuo(filmDict)
+
 browser.get('https://letterboxd.com/cururu_dog/list/melhores-finais-que-ja-vi/edit/')
 time.sleep(1)
 addFilm = browser.find_element(By.ID, 'frm-list-film-name')
-for key, value in filmDict.items():
-    for film in value['films']:
-        addFilm.send_keys(film['href'])
-        time.sleep(2)
-        addFilm.send_keys(Keys.RETURN)
-        time.sleep(0.5)
+i = 1
+print(filmsF)
+for key, values in filmsF.items():
+    print(key, values['quo'])
+    addFilm.send_keys(key)
+    time.sleep(2)
+    addFilm.send_keys(Keys.RETURN)
+    time.sleep(0.5)
+    editBtn = browser.find_element(By.XPATH, f'//*[@id="list-items"]/li[{i+1}]/div[3]/div[2]/span/a')
+    editBtn.click()
+    time.sleep(1)
+    textAreaDetail = browser.find_element(By.ID, 'frm-review')
+    textAreaDetail.send_keys(f'<blockquote><b>Quo:</b> {values['quo']}\n</blockquote><blockquote>{values['detail']}</blockquote>')
+    inputSaveBtn = browser.find_element(By.ID, 'list-entry-save-button')
+    inputSaveBtn.click()
+    time.sleep(1)
+    i = i + 1
 
 time.sleep(5)
 

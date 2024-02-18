@@ -10,17 +10,23 @@ def isTag(prioriTag, key, index):
         return False
     return True
 
-def fillListDict():
-    listPopulated = listcatalog
-    for key in listPopulated:
-        listPopulated[key]['films'] = []
+def getFilmsInLists():
+###### Output Dict
+    filmsInLists = {
+#        'the-godfather': {                         this dict looks like this
+#            'lists': [['Letterboxd 250', 3]]       but with muuuch mooore films
+#        }
+    }
+###### Output Dict
     for index, (key, value) in enumerate(listcatalog.items()):
-        pageLinkFragment = f'/'
+        pageLinkFragment = f''
         nextPage = True
         p = 1 ## Page 1
         filmIndex = 1
+        listLinkFragment = value['link']
         while nextPage == True:
-            listLink = f'https://letterboxd.com/{value['link']}/detail{pageLinkFragment}'
+            print
+            listLink = f'https://letterboxd.com/{listLinkFragment}/detail/{pageLinkFragment}'
             print(listLink)
             htmlLi = requests.get(listLink).content
             soupLi = bs4.BeautifulSoup(htmlLi, 'html.parser')
@@ -35,8 +41,13 @@ def fillListDict():
             entries = listEn.find_all('a', {'href': re.compile(r'/film/(.*)/'), 'class': ''})
             for entry in entries:
                 href = entry['href'][6:-1]
-                # print(filmIndex, entry['href'][6:-1])
-                listPopulated[key]['films'].append({'index': filmIndex, 'href': href})
+                if href not in filmsInLists:
+                    filmListArray = {
+                        'lists': [[key, filmIndex]]
+                    }
+                    filmsInLists[href] = filmListArray
+                else:
+                    filmsInLists[href]['lists'].append([key, filmIndex])
                 filmIndex = filmIndex + 1
-            pageLinkFragment = f'/page/{p}'
-    return listPopulated
+            pageLinkFragment = f'page/{p}'
+    return filmsInLists
