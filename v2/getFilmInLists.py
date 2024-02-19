@@ -24,6 +24,7 @@ def getFilmsInLists():
         p = 1 ## Page 1
         filmIndex = 1
         listLinkFragment = value['link']
+        ## Reading list page
         while nextPage == True:
             print
             listLink = f'https://letterboxd.com/{listLinkFragment}/detail/{pageLinkFragment}'
@@ -39,8 +40,12 @@ def getFilmsInLists():
             else:
                 nextPage = False
             entries = listEn.find_all('a', {'href': re.compile(r'/film/(.*)/'), 'class': ''})
+            ## Loop inside List entries
             for entry in entries:
-                href = entry['href'][6:-1]
+                entryParent = entry.parent
+                if not str(entryParent)[1:3] == 'h2': continue
+                year = entryParent.find('a', {'href': re.compile(r'/films/year/([0-9]{4})/')})['href'][12:-1]
+                href = f'{entry['href'][6:-1]}-{year}'
                 if href not in filmsInLists:
                     filmListArray = {
                         'lists': [[key, filmIndex]]

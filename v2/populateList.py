@@ -19,7 +19,7 @@ time.sleep(1)
 filmDict = getFilmInLists.getFilmsInLists()
 filmsF = calculateFilms.calculateQuo(filmDict)
 
-browser.get('https://letterboxd.com/cururu_dog/list/melhores-finais-que-ja-vi/edit/')
+browser.get('https://letterboxd.com/cururu_dog/list/lista-teste/edit/')
 time.sleep(1)
 addFilm = browser.find_element(By.ID, 'frm-list-film-name')
 i = 1
