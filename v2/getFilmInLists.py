@@ -45,12 +45,13 @@ def getFilmsInLists():
                 entryParent = entry.parent
                 if not str(entryParent)[1:3] == 'h2': continue
                 year = entryParent.find('a', {'href': re.compile(r'/films/year/([0-9]{4})/')})['href'][12:-1]
-                href = f'{entry['href'][6:-1]}-{year}'
+                href = f'{entry['href'][6:-1]}'
                 if href not in filmsInLists:
-                    filmListArray = {
+                    filmInListsModel = {
+                        'year': year,
                         'lists': [[key, filmIndex]]
                     }
-                    filmsInLists[href] = filmListArray
+                    filmsInLists[href] = filmInListsModel
                 else:
                     filmsInLists[href]['lists'].append([key, filmIndex])
                 filmIndex = filmIndex + 1

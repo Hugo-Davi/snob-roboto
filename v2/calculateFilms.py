@@ -2,7 +2,6 @@ import listsCatalog
 
 def calculateQuo(filmDict):
     filmQuo = {}
-    filmDetail = {}
     catalog = listsCatalog.listcatalog
     for key, value in filmDict.items():
         lists = value['lists']
@@ -21,12 +20,11 @@ def calculateQuo(filmDict):
                 else:
                     criterium = criterium + (10/indexLi)
                 detailLi = f'{detailLi} ({indexLi}i)'
-            detailLi = f'<b>{detailLi}</b> {criterium}\n'
+            detailLi = f'<b>{detailLi}</b> {criterium}<br/>'
             detail = f'{detail}{detailLi}'
             quo = quo + criterium
-        if quo < 3: continue
-        filmQuo[key] = {'quo': quo, 'detail': detail}
-        filmDetail[key] = detail
+        if quo < 7: continue
+        filmQuo[key] = {'year': value['year'],'quo': quo, 'detail': detail}
     return dict(sorted(filmQuo.items(), key=lambda x:x[1]['quo'], reverse=True))
     # print(filmQuo.items())
     # print(list(filmQuo).sort(key=lambda x:x[0]['quo']))

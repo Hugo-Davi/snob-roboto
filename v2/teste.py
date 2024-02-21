@@ -1,6 +1,20 @@
 import calculateFilms
 import getFilmInLists
+from getFilmInfo import getFilmInfo, populateInfoDict
 
-a = getFilmInLists.getFilmsInLists()
-b = calculateFilms.calculateQuo(a)
-print (len(b))
+import csv
+
+# a = getFilmInLists.getFilmsInLists()
+# b = calculateFilms.calculateQuo(a)
+
+# with open('films.csv', 'w', newline = '') as file:
+#     writer = csv.writer(file)
+#     fields = ['film', 'year', 'quo', 'detail']
+#     writer.writerow(fields)
+#     for key, values in b.items():
+#         year = values['year']
+#         quo = values['quo']
+#         detail = values['detail']
+#         writer.writerow([key, year, quo, detail])
+
+populateInfoDict()
