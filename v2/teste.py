@@ -1,6 +1,6 @@
-import calculateFilms
-import getFilmInLists
-from getFilmInfo import getFilmInfo, populateInfoDict
+import quo as quo
+import filmInLists as filmInLists
+from filmInfo import getFilmInfo, populateInfoDict
 
 import csv
 
