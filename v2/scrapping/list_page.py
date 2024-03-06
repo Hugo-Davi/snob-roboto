@@ -4,16 +4,17 @@ import requests
 import re
 
 from listsCatalog import listcatalog
+
 def isTag(prioriTag, key, index):
     if not isinstance(prioriTag, bs4.element.Tag):
         print(f'{key} do indice {index} do catalogo não possui uma lista válida')
         return False
     return True
 
-def getFilmsInLists():
+def get_films_in_lists():
 ###### Output Dict
     filmsInLists = {
-#        'the-godfather': {                         this dict looks like this
+#        'the-godfather': {                         this dict will be like this
 #            'lists': [['Letterboxd 250', 3]]       but with muuuch mooore films
 #        }
     }
@@ -37,8 +38,8 @@ def getFilmsInLists():
             if soupLi.find('a', {'class': 'next'}):
                 nextPage = True
                 p = p + 1
-            else:
-                nextPage = False
+            else: nextPage = False
+
             entries = listEn.find_all('a', {'href': re.compile(r'/film/(.*)/'), 'class': ''})
             ## Loop inside List entries
             for entry in entries:

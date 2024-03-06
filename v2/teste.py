@@ -1,20 +1,19 @@
-import quo as quo
-import filmInLists as filmInLists
-from filmInfo import getFilmInfo, populateInfoDict
+import catalog.quo as quo
+# import v2.catalog.filmInLists as filmInLists
+from v2.scrapping.film_page  import get_film_info, populateInfoDict
+from scrapping.list_page import get_films_in_lists
+from catalog.quo import calculate_quo
+from writer.film_quo import write_film_csv_w_quo
 
-import csv
+x = get_films_in_lists()
+y = calculate_quo(x)
+write_film_csv_w_quo(y)
 
-# a = getFilmInLists.getFilmsInLists()
-# b = calculateFilms.calculateQuo(a)
 
-# with open('films.csv', 'w', newline = '') as file:
-#     writer = csv.writer(file)
-#     fields = ['film', 'year', 'quo', 'detail']
-#     writer.writerow(fields)
-#     for key, values in b.items():
-#         year = values['year']
-#         quo = values['quo']
-#         detail = values['detail']
-#         writer.writerow([key, year, quo, detail])
+# print(y)
 
-populateInfoDict()
+# import csv
+
+
+
+# populateInfoDict()
